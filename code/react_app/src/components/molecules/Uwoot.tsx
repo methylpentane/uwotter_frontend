@@ -10,6 +10,7 @@ import {
   Link,
   Slider,
   Grid,
+  colors,
 } from '@material-ui/core';
 import { orange, red } from '@material-ui/core/colors';
 import PlayArrowIcon from '@material-ui/icons/PlayArrow';
@@ -19,7 +20,8 @@ import clsx from 'clsx';
 
 const useStyles = makeStyles({
   root: {
-    // maxWidth: 600,
+    width: '50%',
+    margin: '0 auto',
     backgroundColor: red[300],
   },
   header: {
@@ -44,8 +46,14 @@ const useStyles = makeStyles({
     marginLeft: '20px',
     fontSize: '60%',
   },
-  fired: {
-    color: orange[300],
+  fireBtn: {
+    color: '#6a3534',
+    transition: 'all 800ms 0s ease',
+    '&:active': {
+      color: orange[200],
+      transform: 'scale(1.5)',
+      transition: 'all 0s 0s linear',
+    },
   },
   timeGrid: {
     flexGrow: 1,
@@ -138,9 +146,7 @@ export function UwootMsg(props: Uwoot) {
             </Typography>
           </Grid>
           <Grid>
-            <IconButton aria-label="like" onClick={handleFireClick}>
-              <WhatshotIcon className={clsx(fired && classes.fired)} />
-            </IconButton>
+            <WhatshotIcon className={classes.fireBtn} />
           </Grid>
         </Grid>
         <Typography variant="body2" color="textSecondary" component="p">
