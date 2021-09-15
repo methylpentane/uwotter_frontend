@@ -50,7 +50,7 @@ export function voice002(user_uuid: string, tags: string, voice: Blob) {
     reader.readAsDataURL(voice);
 
     const uwoot = {
-        user_uuid: user_uuid, 
+        user_uuid: user_uuid,
         tags: tags,
         voice: b64
     }
@@ -64,6 +64,7 @@ export function voice002(user_uuid: string, tags: string, voice: Blob) {
 
 // tag-001
 export function tag001(){
+
     axios.get(head_url + '/api/v1/tag/tags')
         .then(res => {
             console.log(res.data)
@@ -73,7 +74,13 @@ export function tag001(){
 
 // like-001
 export function like001(user_uuid: string, voice_uuid: string){
-    axios.put(head_url + '/api/v1/likes/voices/' + voice_uuid + '/users/' + user_uuid)
+
+    const like = {
+        user_uuid: user_uuid,
+        voice_uuid: voice_uuid
+    }
+
+    axios.put(head_url + '/api/v1/like/increment/', { like })
         .then(res => {
             console.log(res.data)
         })
