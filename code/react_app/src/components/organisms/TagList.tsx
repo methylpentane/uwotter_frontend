@@ -1,4 +1,4 @@
-import { Grid, makeStyles } from "@material-ui/core";
+import { Grid, makeStyles, Paper } from "@material-ui/core";
 import { orange } from "@material-ui/core/colors";
 import React from "react";
 import { tags } from "../data";
@@ -8,7 +8,12 @@ import { TagRow } from "../molecules/TagRow";
 const useStyles = makeStyles({
   root: {
     backgroundColor: orange[500],
-    height: '100%',
+    height: 'calc(100vh - 65px)',
+  },
+  tagTitle: {
+    height: '65px',
+    backgroundColor: orange[500],
+    color: '#ffffff',
   }
 })
 
@@ -20,14 +25,17 @@ export function TagList() {
   ));
 
   return (
-    <Grid
-      container
-      className={classes.root}
-      direction="column"
-      justifyContent="space-evenly"
-      alignItems="center"
-    >
-      {tagRows}
-    </Grid>
+    <>
+      <Paper className={classes.tagTitle} elevation={3}>Trend Tag</Paper>
+      <Grid
+        container
+        className={classes.root}
+        direction="column"
+        justifyContent="space-evenly"
+        alignItems="center"
+      >
+        {tagRows}
+      </Grid>
+    </>
   );
 }

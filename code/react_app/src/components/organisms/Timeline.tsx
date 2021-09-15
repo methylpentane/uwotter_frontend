@@ -3,13 +3,16 @@ import React from "react";
 import { UwootMsg } from "../molecules/Uwoot";
 import { uwootList } from "../data";
 
-const useStyles = makeStyles({
-  timeline: {
-    backgroundColor: '#f6a556',
-    height: '100vh',
-    overflowY: 'scroll',
-  },
-})
+const useStyles = makeStyles((theme) => {
+  return {
+    timeline: {
+      backgroundColor: '#f6a556',
+      height: 'calc(100vh - 65px)',
+      overflowY: 'scroll',
+    },
+    toolbar: theme.mixins.toolbar
+  };
+});
 
 export function TimeLine() {
   const classes = useStyles();
@@ -25,8 +28,11 @@ export function TimeLine() {
   ));
 
   return (
-    <Box className={classes.timeline}>
-      {uwoots}
-    </Box>
+    <>
+      <div className={classes.toolbar}></div>
+      <Box className={classes.timeline}>
+        {uwoots}
+      </Box>
+    </>
   );
 }

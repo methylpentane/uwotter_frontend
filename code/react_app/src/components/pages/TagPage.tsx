@@ -5,7 +5,6 @@ export function TagPage() {
   return (
     <>
       タグページ
-      <SendMsgDialog />
     </>
   );
 }

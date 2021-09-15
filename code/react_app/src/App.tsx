@@ -6,6 +6,7 @@ import { TagList } from './components/organisms/TagList';
 import { Grid, makeStyles } from '@material-ui/core';
 import { TimeLine } from './components/organisms/Timeline';
 import { orange } from '@material-ui/core/colors';
+import { TopBar } from './components/organisms/TopBar';
 
 const useStyles = makeStyles({
   root: {
@@ -18,6 +19,8 @@ function App() {
 
   return (
     <Router>
+      <TopBar />
+      
       <Grid
         container
         direction='row'
