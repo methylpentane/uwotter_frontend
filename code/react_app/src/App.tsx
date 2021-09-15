@@ -20,9 +20,10 @@ function App() {
         >
           Learn React
         </a>
+        {/* <button onClick={()=>base64('./back/test.aac')}>テスト</button> */}
       </header>
       {
-        ApiGet_Simple("http://localhost:8000/test/")
+        //ApiGet_Simple("http://localhost:8000/test/")
       }
     </div>
   );
