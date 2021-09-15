@@ -1,0 +1,20 @@
+version: "3.7"
+
+services:
+  react:
+    container_name: react
+    build: 
+      context: ./Node
+    image: node:react
+    ports:
+      - 3000:3000
+    working_dir: /code
+    tty: true
+    volumes:
+      - ./code:/code
+    networks: 
+      - django_react
+
+networks:
+  django_react:
+    external: true
