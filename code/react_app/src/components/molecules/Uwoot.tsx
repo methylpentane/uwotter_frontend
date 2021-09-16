@@ -14,8 +14,7 @@ import {
 import { orange, red } from '@material-ui/core/colors';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
 import AudioPlayer from 'material-ui-audio-player';
-import clsx from 'clsx';
-import { Uwoot } from '../../ApiFunction';
+import { like001, User, Uwoot } from '../../ApiFunction';
 
 const muiTheme = createTheme({});
 
@@ -67,16 +66,21 @@ const useStyles = makeStyles({
 });
 
 
-export function UwootMsg(props: Uwoot) {
+type Props = {
+  uwoot: Uwoot,
+  loginUser: User,
+};
+export function UwootMsg(props: Props) {
   const classes = useStyles();
-  const [fireNum, setFireNum] = useState(props.fires);
+  const [fireNum, setFireNum] = useState(props.uwoot.like);
 
   function handleFireClick() {
     setFireNum(fireNum + 1);
+    like001(props.loginUser.uuid, props.uwoot.uuid);
   }
 
-  const tags = props.tags.map(tag => (
-    <Link key={tag.uuid} className={classes.tag} href={`/home?tag=${tag.uuid}`}>
+  const tags = props.uwoot.tags.map(tag => (
+    <Link key={tag.uuid} className={classes.tag} href={`/home?userid=${props.loginUser.uuid}&username=${props.loginUser.name}&tagid=${tag.uuid}&tagname=${tag.name}`}>
       {`#${tag.name}`}
     </Link>));
 
@@ -86,7 +90,7 @@ export function UwootMsg(props: Uwoot) {
         className={classes.header}
         avatar={
           <Avatar aria-label="recipe" className={classes.avatar}>
-            {props.user.name[0]}
+            {props.uwoot.user.name[0]}
           </Avatar>
         }
         title={
@@ -96,7 +100,7 @@ export function UwootMsg(props: Uwoot) {
           >
             <Grid item className={classes.user}>
               <Typography className={classes.userName}>
-                {props.user.name}
+                {props.uwoot.user.name}
               </Typography>
             </Grid>
             <Grid item>
@@ -124,7 +128,7 @@ export function UwootMsg(props: Uwoot) {
               <Grid item xs={12}>
                 <ThemeProvider theme={muiTheme}>
                   <AudioPlayer
-                    src={props.voice}
+                    src={props.uwoot.voice}
                     volume={false}
                     elevation={0}
                     time="single"

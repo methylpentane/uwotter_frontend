@@ -2,6 +2,7 @@ import { Grid, makeStyles, Paper } from "@material-ui/core";
 import { orange } from "@material-ui/core/colors";
 import React from "react";
 import { useHistory } from "react-router";
+import { Tag, User } from "../../ApiFunction";
 
 
 const useStyles = makeStyles({
@@ -20,24 +21,23 @@ const useStyles = makeStyles({
   },
 })
 
-export type IndexedTag = {
+type Props = {
   idx: number,
-  uuid: string,
-  name: string,
+  tag: Tag,
+  loginUser: User,
 }
-
-export function TagRow(props: IndexedTag) {
+export function TagRow(props: Props) {
   const classes = useStyles();
   const history = useHistory();
 
   function handleClick() {
-    history.push(`/home?tag=${props.uuid}`);
+    history.push(`/home?userid=${props.loginUser.uuid}&username=${props.loginUser.name}&tagid=${props.tag.uuid}&tagname=${props.tag.name}`);
   }
 
   return (
     <Grid item className={classes.gridItem}>
       <Paper className={classes.tagRow} elevation={0} onClick={handleClick} >
-        {`${props.idx}: #${props.name}`}
+        {`${props.idx}: #${props.tag.name}`}
       </Paper>
     </Grid>
   );

@@ -1,7 +1,7 @@
 import { Grid, makeStyles, Paper } from "@material-ui/core";
 import { orange } from "@material-ui/core/colors";
 import React, { useEffect, useState } from "react";
-import { Tag, tag001 } from "../../ApiFunction";
+import { Tag, tag001, User } from "../../ApiFunction";
 import { tmpTags } from "../data";
 import { TagRow } from "../molecules/TagRow";
 
@@ -18,7 +18,7 @@ const useStyles = makeStyles({
   }
 })
 
-export function TagList() {
+export function TagList(props: {loginUser: User}) {
   const classes = useStyles();
   const [tags, setTags] = useState([] as Tag[]);
 
@@ -32,7 +32,7 @@ export function TagList() {
   }, []);
 
   const tagRows = tags.map((tag, idx) => (
-    <TagRow key={tag.uuid} idx={idx+1} uuid={tag.uuid} name={tag.name} />
+    <TagRow key={tag.uuid} idx={idx+1} tag={tag} loginUser={props.loginUser} />
   ));
 
   return (

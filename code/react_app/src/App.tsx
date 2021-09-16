@@ -1,46 +1,23 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { TagPage } from './components/pages/TagPage';
+import { LoginWindow } from './components/pages/Login';
 import { HomePage } from './components/pages/HomePage';
-import { TagList } from './components/organisms/TagList';
-import { Grid, makeStyles } from '@material-ui/core';
-import { TimeLine } from './components/organisms/Timeline';
-import { orange } from '@material-ui/core/colors';
-import { TopBar } from './components/organisms/TopBar';
 
-const useStyles = makeStyles({
-  root: {
-    backgroundColor: orange[400],
-  },
-})
 
 function App() {
-  const classes = useStyles();
-
   return (
     <Router>
-      <TopBar />
-
-      <Grid
-        container
-        direction='row'
-        alignItems='stretch'
-      >
-        <Grid item xs={9}>
-          <Switch>
-            <Route path="/home">
-              <TimeLine />
-            </Route>
-            <Route path="/" exact>
-              <TimeLine />
-            </Route>
-          </Switch>
-        </Grid>
-
-        <Grid item xs={3} className={classes.root}>
-          <TagList />
-        </Grid>
-      </Grid>
+      <Switch>
+        <Route path="/login">
+          <LoginWindow />
+        </Route>
+        <Route path="/home">
+          <HomePage />
+        </Route>
+        <Route path="/" exact>
+          <HomePage />
+        </Route>
+      </Switch>
     </Router>
   );
 }

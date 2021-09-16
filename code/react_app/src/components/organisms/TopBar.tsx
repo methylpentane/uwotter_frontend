@@ -1,6 +1,7 @@
 import { AppBar, Button, Divider, makeStyles, Toolbar, Typography } from "@material-ui/core";
 import { orange } from "@material-ui/core/colors";
 import React, { useState } from "react";
+import { User } from "../../ApiFunction";
 import { SendMsgDialog } from "./SendMsg";
 
 const useStyles = makeStyles({
@@ -23,9 +24,9 @@ const useStyles = makeStyles({
     backgroundColor: '#ff2599',
     borderRadius: '20px',
     transition: 'background-color 200ms 0s ease',
+    cursor: 'pointer',
     '&:hover': {
       backgroundColor: '#ff5894',
-      cursor: 'pointer',
     }
   },
   divider: {
@@ -40,7 +41,7 @@ const useStyles = makeStyles({
   }
 })
 
-export function TopBar() {
+export function TopBar(props: {loginUser: User}) {
   const classes = useStyles();
   const [open, setOpen] = useState(false);
 
@@ -68,7 +69,7 @@ export function TopBar() {
           Trend Tags
         </div>
       </Toolbar>
-      <SendMsgDialog open={open} onClose={handleClose} userId="1" />
+      <SendMsgDialog open={open} onClose={handleClose} loginUser={props.loginUser} />
     </AppBar>
   );
 }

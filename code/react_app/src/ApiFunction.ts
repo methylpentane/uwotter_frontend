@@ -1,4 +1,3 @@
-import React from 'react';
 import axios from 'axios';
 
 // HEAD_URL
@@ -13,10 +12,11 @@ export type Tag = {
     name: string,
 }
 export type Uwoot = {
+    uuid: string,
     user: User,
     tags: Tag[],
     voice: string,
-    fires: number,
+    like: number,
 }
 // voice-001_tag-002_tag-003
 export async function getVoices(tag_uuid: string | null, synthetic: boolean): Promise<Uwoot[]> {
@@ -91,45 +91,49 @@ export async function tag001(){
 }
 
 // like-001
-export function like001(user_uuid: string, voice_uuid: string){
+export async function like001(user_uuid: string, voice_uuid: string){
 
     const like = {
         user_uuid: user_uuid,
         voice_uuid: voice_uuid
     }
 
-    axios.put(head_url + '/api/v1/like/increment/', { like })
-        .then(res => {
-            console.log(res.data)
-        })
+    const res = await axios.put(head_url + '/api/v1/like/increment/', { like });
+    console.log(res.data);
+        // .then(res => {
+        //     console.log(res.data)
+        // })
 }
 
 // user-001
-export function user001(username: string, profile: string, password: string){
+export async function user001(username: string, profile: string, password: string){
     const register = {
         username: username,
         profile: profile,
         password: password
     }
 
-    axios.post(head_url + '/register/',{ register })
-        .then(res => {
-            console.log(res.data)
-        })
+    const res = await axios.post(head_url + '/register/',{ register });
+    console.log(res.data);
+        // .then(res => {
+        //     console.log(res.data)
+        // })
 }
 
 // user-002
-export function user002(username: string, password: string){
+export async function user002(username: string, password: string){
     const login = {
         username: username,
         password: password
     }
 
-    axios.post(head_url + '/login/',{ login })
-        .then(res => {
-            console.log(res.data)
-            return res.data
-        })
+    const res = await axios.post(head_url + '/login/',{ login });
+    console.log(res.data)
+    return res.data;
+        // .then(res => {
+        //     console.log(res.data)
+        //     return res.data
+        // })
 }
 
 // test_function

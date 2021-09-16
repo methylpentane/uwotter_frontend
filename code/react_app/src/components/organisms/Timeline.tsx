@@ -2,8 +2,8 @@ import { Box, makeStyles } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { UwootMsg } from "../molecules/Uwoot";
 import { tmpUwootList } from "../data";
-import { getVoices, Uwoot } from "../../ApiFunction";
-import { useLocation, useParams } from "react-router";
+import { getVoices, Tag, User, Uwoot } from "../../ApiFunction";
+import { useLocation } from "react-router";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -16,37 +16,34 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
-export function TimeLine() {
+type Props = {
+  loginUser: User,
+  tag: Tag,
+}
+export function TimeLine(props: Props) {
   const classes = useStyles();
   const [uwootList, setUwootList] = useState([] as Uwoot[]);
-  const [totalVoice, setTotalVoice] = useState('');
 
   const search = useLocation().search;
   const query = new URLSearchParams(search);
-  const tagId = query.get('tag');
+  const tagId = query.get('tagid');
   useEffect(() => {
     const init = async () => {
       // 一覧取得
       const uwootRes: Uwoot[] = await getVoices(tagId, false);
       setUwootList(uwootRes);
       
-      if (tagId !== null) {
-        // まとめて聞くやつを取ってくる
-        const res: Uwoot[] = await getVoices(tagId, true);
-        setTotalVoice(res[0].voice);
-      }
+      
     };
     init();
     setUwootList(tmpUwootList);  // 後で消す
-  }, []);
+  }, [tagId]);
 
   const uwoots = uwootList.map(item => (
     <UwootMsg
       key={item.user.name}
-      user={item.user}
-      tags={item.tags}
-      voice={item.voice}
-      fires={item.fires}
+      uwoot={item}
+      loginUser={props.loginUser}
     />
   ));
 

@@ -1,7 +1,7 @@
 import { Button, Dialog, DialogTitle, Grid, makeStyles, TextField, Typography } from "@material-ui/core";
-import clsx from "clsx";
 import React, { useState } from "react";
-import { voice002 } from "../../ApiFunction";
+import { useHistory } from "react-router";
+import { User, voice002 } from "../../ApiFunction";
 
 const dialog = {width: '320px', height: '230px'};
 
@@ -62,12 +62,13 @@ const useStyles = makeStyles({
 type Props = {
   open: boolean,
   onClose: () => void,
-  userId: string,
+  loginUser: User,
 };
 export function SendMsgDialog(props: Props) {
   const classes = useStyles();
   const [file, setFile] = useState(null as File | null);
   const [tags, setTags] = useState('');
+  let history = useHistory();
 
   function handleFile(e: React.ChangeEvent<HTMLInputElement>): void {
     const files: FileList | null = e.target.files;
@@ -93,9 +94,10 @@ export function SendMsgDialog(props: Props) {
       return;
     }
     console.log(file.name, tags);
-    voice002(props.userId, tags, file);
+    voice002(props.loginUser.uuid, tags, file);
     console.log('sent uwoot!');
     props.onClose();
+    history.push(`/home?userid=${props.loginUser.uuid}&username=${props.loginUser.name}`);
   }
   
   return (
@@ -158,4 +160,3 @@ export function SendMsgDialog(props: Props) {
     </Dialog>
   );
 }
-//<input type="file" onChange={(e) => handleFile(e)} />
