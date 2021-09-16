@@ -68,6 +68,7 @@ export function SendMsgDialog(props: Props) {
   const classes = useStyles();
   const [file, setFile] = useState(null as File | null);
   const [tags, setTags] = useState('');
+  const [recording, setRecording] = useState(false);
   let history = useHistory();
 
   function handleFile(e: React.ChangeEvent<HTMLInputElement>): void {
@@ -78,6 +79,27 @@ export function SendMsgDialog(props: Props) {
     }
     setFile(files[0]);
     console.log(file);
+  }
+
+  function handleRecordClick() {
+    setRecording(!recording);
+    if (recording) { // 録音開始
+      if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        console.log('getUserMedia supported.');
+        navigator.mediaDevices.getUserMedia ({ audio: true })
+          .then(function(stream) {
+            const mediaRecorder = new MediaRecorder(stream);
+            
+          })
+          .catch(function(err) {
+            console.log('The following getUserMedia error occured: ' + err);
+          }
+        );
+        
+      } else {
+        console.log('お使いのブラウザでは録音できません');
+      }
+    }
   }
 
   function handleTagsChange(e: React.ChangeEvent<HTMLInputElement>): void {
@@ -121,7 +143,7 @@ export function SendMsgDialog(props: Props) {
               <input id="inputFile" type="file" onChange={(e) => handleFile(e)} />
             </label>
             <Typography component="span">or</Typography>
-            <Button variant="contained" className={classes.recBtn}>Record</Button>
+            <Button variant="contained" className={classes.recBtn} onClick={handleRecordClick}>Record</Button>
           </div>
         </Grid>
         <Grid item>

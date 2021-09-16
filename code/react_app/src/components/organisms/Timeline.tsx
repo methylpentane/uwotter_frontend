@@ -33,10 +33,9 @@ export function TimeLine(props: Props) {
       const uwootRes: Uwoot[] = await getVoices(tagId, false);
       setUwootList(uwootRes);
       
-      
     };
     init();
-    // setUwootList(tmpUwootList);  // 後で消す
+    setUwootList(tmpUwootList);  // 後で消す
   }, [tagId]);
 
   const uwoots = uwootList.map(item => (
