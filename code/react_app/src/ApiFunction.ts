@@ -42,7 +42,7 @@ export async function getVoices(tag_uuid: string | null, synthetic: boolean): Pr
         }
     }
 
-    const res = await axios.get(head_url + '/api/v1/voice/get_voices/',{ params : uwoot_list });
+    const res = await axios.get(head_url + '/api/v1/voice/get_voices',{ params : uwoot_list });
     console.log(res.data);
     return res.data.result;
         // .then(res => {
@@ -98,7 +98,7 @@ export async function like001(user_uuid: string, voice_uuid: string){
         voice_uuid: voice_uuid
     }
 
-    const res = await axios.put(head_url + '/api/v1/like/increment/', { like });
+    const res = await axios.put(head_url + '/api/v1/like/increment', { like });
     console.log(res.data);
         // .then(res => {
         //     console.log(res.data)
@@ -113,7 +113,7 @@ export async function user001(username: string, profile: string, password: strin
         password: password
     }
 
-    const res = await axios.post(head_url + '/register/',{ register });
+    const res = await axios.post(head_url + '/register',{ register });
     console.log(res.data);
         // .then(res => {
         //     console.log(res.data)
@@ -127,7 +127,7 @@ export async function user002(username: string, password: string){
         password: password
     }
 
-    const res = await axios.post(head_url + '/login/',{ login });
+    const res = await axios.post(head_url + '/login',{ login });
     console.log(res.data)
     return res.data;
         // .then(res => {
