@@ -40,7 +40,7 @@ export function TimeLine(props: Props) {
 
   const uwoots = uwootList.map(item => (
     <UwootMsg
-      key={item.user.name}
+      key={item.uuid}
       uwoot={item}
       loginUser={props.loginUser}
     />

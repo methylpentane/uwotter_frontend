@@ -3,7 +3,7 @@ import { orange } from "@material-ui/core/colors";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
 import React, { useState } from "react";
 import { useHistory } from "react-router";
-import { user002 } from "../../ApiFunction";
+import { user001, user002 } from "../../ApiFunction";
 
 const useStyles = makeStyles({
   root: {
@@ -39,7 +39,7 @@ const useStyles = makeStyles({
   },
 });
 
-export function LoginWindow() {
+export function SignUpWindow() {
   const classes = useStyles();
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -59,9 +59,9 @@ export function LoginWindow() {
   }
 
   async function handleClick() {
-    const res = await user002(username, password);
+    await user001(username, '', password);
 
-    history.push(`/home?userid=${res.id}&username=${res.username}`);
+    history.push(`/login`);
   }
 
   return (
@@ -81,7 +81,7 @@ export function LoginWindow() {
           </Grid>
           <Grid item>
             <Typography variant="h6" component="h2" className={classes.title}>
-              Log in
+              Sign Up
             </Typography>
           </Grid>
           <Grid item>
@@ -126,7 +126,7 @@ export function LoginWindow() {
               className={classes.btn}
               color="secondary"
               onClick={handleClick}
-            >Let's start!</Button>
+            >Register!</Button>
           </Grid>
         </Grid>
       </Paper>

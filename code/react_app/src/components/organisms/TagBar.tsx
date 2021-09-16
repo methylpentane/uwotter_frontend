@@ -41,7 +41,8 @@ export function TagBar(props: { tag: Tag }) {
       alert(`have not loaded sound yet...`);
       return;
     }
-    const audioPlayer = new Audio(totalVoice);
+    const tmp = `data:audio/wav;base64,${totalVoice}`;
+    const audioPlayer = new Audio(tmp);
     audioPlayer.play();
   }
 

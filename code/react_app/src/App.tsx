@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { LoginWindow } from './components/pages/Login';
 import { HomePage } from './components/pages/HomePage';
+import { SignUpWindow } from './components/pages/SignUp';
 
 
 function App() {
@@ -10,6 +11,9 @@ function App() {
       <Switch>
         <Route path="/login">
           <LoginWindow />
+        </Route>
+        <Route path="/signup">
+          <SignUpWindow />
         </Route>
         <Route path="/home">
           <HomePage />

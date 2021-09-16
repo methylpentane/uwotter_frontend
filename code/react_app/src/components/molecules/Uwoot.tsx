@@ -128,7 +128,7 @@ export function UwootMsg(props: Props) {
               <Grid item xs={12}>
                 <ThemeProvider theme={muiTheme}>
                   <AudioPlayer
-                    src={props.uwoot.voice}
+                    src={`data:audio/wav;base64,${props.uwoot.voice}`}
                     volume={false}
                     elevation={0}
                     time="single"

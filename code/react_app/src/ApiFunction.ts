@@ -111,7 +111,7 @@ export async function user001(username: string, profile: string, password: strin
         password: password
     }
 
-    const res = await axios.post(head_url + '/register',{ register });
+    const res = await axios.post(head_url + '/register', register );
     console.log(res.data);
         // .then(res => {
         //     console.log(res.data)
