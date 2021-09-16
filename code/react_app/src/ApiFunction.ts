@@ -42,7 +42,7 @@ export async function getVoices(tag_uuid: string | null, synthetic: boolean): Pr
         }
     }
 
-    const res = await axios.get(head_url + '/api/v1/voice/get_voices',{ params : uwoot_list });
+    const res = await axios.get(head_url +'/api/v1/voice/get_voices',{ params : uwoot_list });
     console.log(res.data);
     return res.data.result;
         // .then(res => {
@@ -55,27 +55,25 @@ export async function getVoices(tag_uuid: string | null, synthetic: boolean): Pr
 export function voice002(user_uuid: string, tags: string, voice: Blob) {
     // let sound_blob = new Blob([file] , {type: 'audio/aac'})
     // console.log("blob実行結果：",sound_blob)
-
-    const reader = new FileReader();
-    let b64: any; // base64変数
-
-    reader.onload = function(){
+    let b64: any;
+    let reader = new FileReader;
+    reader.readAsDataURL(voice);
+    reader.onload = function(e){
         b64 = reader.result;
         console.log(b64);
-    }
-    reader.readAsDataURL(voice);
+        const uwoot = {
+            user_uuid: user_uuid,
+            tags: tags,
+            voice: b64,
+        }
+        console.log(uwoot)
 
-    const uwoot = {
-        user_uuid: user_uuid,
-        tags: tags,
-        voice: b64
-    }
-
-    axios.post(head_url + '/api/v1/voice/put_voice', uwoot)
-        .then(res => {
-            console.log(res);
-            console.log(res.data);
-        })
+        axios.post(head_url + '/api/v1/voice/put_voice', uwoot)
+            .then(res => {
+                console.log(res);
+                console.log(res.data);
+            })
+        }
 }
 
 // tag-001
