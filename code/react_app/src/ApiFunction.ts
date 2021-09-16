@@ -42,7 +42,7 @@ export async function getVoices(tag_uuid: string | null, synthetic: boolean): Pr
         }
     }
 
-    const res = await axios.get(head_url + '/api/v1/voices/get_voices',{ params : uwoot_list });
+    const res = await axios.get(head_url + '/api/v1/voice/get_voices',{ params : uwoot_list });
     console.log(res.data);
     return res.data.result;
         // .then(res => {
@@ -71,7 +71,7 @@ export function voice002(user_uuid: string, tags: string, voice: Blob) {
         voice: b64
     }
 
-    axios.post(head_url + '/api/v1/voices/put_voice',{ uwoot })
+    axios.post(head_url + '/api/v1/voice/put_voice',{ uwoot })
         .then(res => {
             console.log(res);
             console.log(res.data);
