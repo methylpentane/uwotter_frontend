@@ -42,7 +42,7 @@ export async function getVoices(tag_uuid: string | null, synthetic: boolean): Pr
         }
     }
 
-    const res = await axios.get(head_url + '/api/v1/voice/get_voices',{ params : uwoot_list });
+    const res = await axios.get(head_url + '/api/v1/voice/get_voices/',{ params : uwoot_list });
     console.log(res.data);
     return res.data.result;
         // .then(res => {
