@@ -28,7 +28,7 @@ export function TagList(props: {loginUser: User}) {
       setTags(tagRes);
     };
     init();
-    setTags(tmpTags);  // 後で消す
+    // setTags(tmpTags);  // 後で消す
   }, [props.loginUser]);
 
   const tagRows = tags.map((tag, idx) => (

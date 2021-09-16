@@ -35,7 +35,7 @@ export function TimeLine(props: Props) {
       
     };
     init();
-    setUwootList(tmpUwootList);  // 後で消す
+    // setUwootList(tmpUwootList);  // 後で消す
   }, [tagId]);
 
   const uwoots = uwootList.map(item => (
