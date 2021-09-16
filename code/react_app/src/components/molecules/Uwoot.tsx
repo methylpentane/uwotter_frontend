@@ -6,23 +6,28 @@ import {
   Card,
   CardHeader,
   Avatar,
-  IconButton,
   Link,
-  Slider,
   Grid,
-  colors,
+  createTheme,
+  ThemeProvider,
 } from '@material-ui/core';
 import { orange, red } from '@material-ui/core/colors';
-import PlayArrowIcon from '@material-ui/icons/PlayArrow';
-import PauseIcon from '@material-ui/icons/Pause';
 import WhatshotIcon from '@material-ui/icons/Whatshot';
+import AudioPlayer from 'material-ui-audio-player';
 import clsx from 'clsx';
+import { Uwoot } from '../../ApiFunction';
+
+const muiTheme = createTheme({});
 
 const useStyles = makeStyles({
   root: {
     width: '50%',
-    margin: '0 auto',
+    margin: '10px auto',
     backgroundColor: red[300],
+    transition: 'all 200ms 0s ease',
+    '&:hover': {
+      transform: 'scale(1.1)',
+    }
   },
   header: {
     backgroundColor: red[500],
@@ -31,12 +36,15 @@ const useStyles = makeStyles({
   avatar: {
     backgroundColor: red[900],
   },
+  audio: {
+    height: '30px',
+  },
   tag: {
     margin: '0 5px',
+    color: 'white',
   },
   user: {
-    display: 'flex',
-    alignItems: 'center',
+    flexGrow: 1,
   },
   userName: {
     color: 'white',
@@ -48,6 +56,7 @@ const useStyles = makeStyles({
   },
   fireBtn: {
     color: '#6a3534',
+    cursor: 'pointer',
     transition: 'all 800ms 0s ease',
     '&:active': {
       color: orange[200],
@@ -55,51 +64,20 @@ const useStyles = makeStyles({
       transition: 'all 0s 0s linear',
     },
   },
-  timeGrid: {
-    flexGrow: 1,
-  },
-  time: {
-    fontSize: '70%',
-  },
 });
 
-export type User = {
-  uuid: string,
-  name: string,
-}
-export type Uwoot = {
-  user: User,
-  tags: string[],
-  voice: string,
-  fires: number,
-}
+
 export function UwootMsg(props: Uwoot) {
   const classes = useStyles();
-  const [playing, setPlaying] = useState(false);
-  const [fired, setFired] = useState(false);
-  const [currentTime, setCurrentTime] = useState(0);
-
-  const audioPlayer = new Audio(props.voice);
-  function handlePlayClick() {
-    if (!playing) {
-      console.log('RendoB', audioPlayer.duration);
-      audioPlayer.play();
-    }
-    setPlaying(!playing);
-  }
-  function handleSeekbar(e: any, newValue: number | number[]) {
-    setCurrentTime(newValue as number);
-  }
+  const [fireNum, setFireNum] = useState(props.fires);
 
   function handleFireClick() {
-    setFired(!fired);
+    setFireNum(fireNum + 1);
   }
 
-  const audioButton = playing ? <PauseIcon /> : <PlayArrowIcon />;
-
   const tags = props.tags.map(tag => (
-    <Link key={tag} className={classes.tag} href="/">
-      {`#${tag}`}
+    <Link key={tag.uuid} className={classes.tag} href={`/home?tag=${tag.uuid}`}>
+      {`#${tag.name}`}
     </Link>));
 
   return (
@@ -112,46 +90,56 @@ export function UwootMsg(props: Uwoot) {
           </Avatar>
         }
         title={
-          <div className={classes.user}>
-            <Typography className={classes.userName}>
-              {props.user.name}
-            </Typography>
-          </div>
+          <Grid
+            container
+            alignItems="center"
+          >
+            <Grid item className={classes.user}>
+              <Typography className={classes.userName}>
+                {props.user.name}
+              </Typography>
+            </Grid>
+            <Grid item>
+              <WhatshotIcon className={classes.fireBtn} onClick={handleFireClick} />
+            </Grid>
+            <Grid item>
+              <Typography>{fireNum}</Typography>
+            </Grid>
+          </Grid>
         }
       />
       <CardContent>
         <Grid
-          container 
-          spacing={2}
-          alignItems="center"
+          container
+          direction="column"
+          justifyContent="space-between"
+          spacing={0}
         >
+          <Grid item className={classes.audio}>
+            <Grid
+              container 
+              spacing={2}
+              alignItems="center"
+            >
+              <Grid item xs={12}>
+                <ThemeProvider theme={muiTheme}>
+                  <AudioPlayer
+                    src={props.voice}
+                    volume={false}
+                    elevation={0}
+                    time="single"
+                    timePosition="end"
+                  />
+                </ThemeProvider>
+              </Grid>
+            </Grid>
+          </Grid>
           <Grid item>
-            <IconButton aria-label="play or pause" onClick={handlePlayClick}>
-              {audioButton}
-            </IconButton>
-          </Grid>
-          <Grid item xs={5}>
-            <Slider
-              value={currentTime}
-              onChange={handleSeekbar}
-              min={0}
-              max={0.19325}
-              step={0.01}
-              aria-labelledby="seek-bar"
-            />
-          </Grid>
-          <Grid item className={classes.timeGrid}>
-            <Typography className={classes.time} color="textSecondary">
-              {currentTime}
+            <Typography color="textSecondary">
+              <br/>{tags}
             </Typography>
           </Grid>
-          <Grid>
-            <WhatshotIcon className={classes.fireBtn} />
-          </Grid>
         </Grid>
-        <Typography variant="body2" color="textSecondary" component="p">
-          {tags}
-        </Typography>
       </CardContent>
     </Card>
   );

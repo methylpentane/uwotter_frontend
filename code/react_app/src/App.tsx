@@ -20,7 +20,7 @@ function App() {
   return (
     <Router>
       <TopBar />
-      
+
       <Grid
         container
         direction='row'
@@ -28,8 +28,8 @@ function App() {
       >
         <Grid item xs={9}>
           <Switch>
-            <Route path="/tags" exact>
-              <TagPage />
+            <Route path="/home">
+              <TimeLine />
             </Route>
             <Route path="/" exact>
               <TimeLine />

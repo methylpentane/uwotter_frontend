@@ -1,6 +1,7 @@
 import { Grid, makeStyles, Paper } from "@material-ui/core";
 import { orange } from "@material-ui/core/colors";
 import React from "react";
+import { useHistory } from "react-router";
 
 
 const useStyles = makeStyles({
@@ -27,9 +28,10 @@ export type IndexedTag = {
 
 export function TagRow(props: IndexedTag) {
   const classes = useStyles();
+  const history = useHistory();
 
   function handleClick() {
-    alert(`clicked #${props.name}!`);
+    history.push(`/home?tag=${props.uuid}`);
   }
 
   return (

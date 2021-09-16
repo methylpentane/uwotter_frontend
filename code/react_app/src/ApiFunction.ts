@@ -4,13 +4,27 @@ import axios from 'axios';
 // HEAD_URL
 let head_url = 'http://localhost:8000' // develop
 
+export type User = {
+    uuid: string,
+    name: string,
+}
+export type Tag = {
+    uuid: string,
+    name: string,
+}
+export type Uwoot = {
+    user: User,
+    tags: Tag[],
+    voice: string,
+    fires: number,
+}
 // voice-001_tag-002_tag-003
-export function getVoices(tag_uuid: string | null, synthetic: boolean){
+export async function getVoices(tag_uuid: string | null, synthetic: boolean): Promise<Uwoot[]> {
 
     const jst = new Date().toLocaleString('ja');
     let uwoot_list 
 
-    if(tag_uuid !== null && synthetic === false){  // voice-001
+    if(tag_uuid === null && synthetic === false){  // voice-001
         uwoot_list = {
             now: jst
         }
@@ -28,11 +42,13 @@ export function getVoices(tag_uuid: string | null, synthetic: boolean){
         }
     }
 
-    axios.get(head_url + '/api/v1/voices/get_voices',{ params : uwoot_list })
-        .then(res => {
-            console.log(res.data)
-            return res.data.result
-        })
+    const res = await axios.get(head_url + '/api/v1/voices/get_voices',{ params : uwoot_list });
+    console.log(res.data);
+    return res.data.result;
+        // .then(res => {
+        //     console.log(res.data)
+        //     return res.data.result
+        // })
 }
 
 // voice-002
@@ -63,13 +79,15 @@ export function voice002(user_uuid: string, tags: string, voice: Blob) {
 }
 
 // tag-001
-export function tag001(){
+export async function tag001(){
 
-    axios.get(head_url + '/api/v1/tag/tags')
-        .then(res => {
-            console.log(res.data)
-            return res.data.result
-        })
+    const res = await axios.get(head_url + '/api/v1/tag/tags');
+    console.log(res.data);
+    return res.data.result;
+    // .then(res => {
+    //     console.log(res.data)
+    //     return res.data.result
+    // })
 }
 
 // like-001
