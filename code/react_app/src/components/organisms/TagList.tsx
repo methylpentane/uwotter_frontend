@@ -28,8 +28,8 @@ export function TagList(props: {loginUser: User}) {
       setTags(tagRes);
     };
     init();
-    // setTags(tmpTags);  // 後で消す
-  }, []);
+    setTags(tmpTags);  // 後で消す
+  }, [props.loginUser]);
 
   const tagRows = tags.map((tag, idx) => (
     <TagRow key={tag.uuid} idx={idx+1} tag={tag} loginUser={props.loginUser} />
